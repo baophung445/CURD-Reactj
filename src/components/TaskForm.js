@@ -30,7 +30,6 @@ class TaskForm extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     this.props.onSubmit(this.state);
-
     // CLEAR & CLOSR FORM
     this.onClear();
     this.onCloseForm();
@@ -43,10 +42,10 @@ class TaskForm extends Component {
     });
   };
 
+  // Thực hiện một lần khi mở form
   componentWillMount() {
     console.log("componentWillUnmount");
-    console.log(this.props.tasksss);
-
+    //console.log(this.props.tasksss);
     if (this.props.tasksss) {
       this.setState({
         id: this.props.tasksss.id,
@@ -54,9 +53,21 @@ class TaskForm extends Component {
         status: this.props.tasksss.status,
       });
     }
-
-    console.log(this.state);
+    //console.log(this.state);
   }
+
+  componentWillReceiveProps(nextProps){
+    // console.log(nextProps);
+
+    if (nextProps && nextProps.tasksss) {
+        this.setState({
+          id: nextProps.tasksss.id,
+          name: nextProps.tasksss.name,
+          status: nextProps.tasksss.status,
+        });
+      }
+  }
+
 
   render() {
     var { id } = this.state;
@@ -64,7 +75,7 @@ class TaskForm extends Component {
       <div className="panel panel-warning">
         <div className="panel-heading">
           <h3 className="panel-title">
-            {id !== "" ? "Cập nhập công việc" : "Thêm công viêc"}
+            {id !== "" ? "Cập nhập công việc" : "Thêm công viêc "}
             <span
               className="fa fa-times-circle text-right icon"
               onClick={this.onCloseForm}

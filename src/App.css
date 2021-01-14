@@ -61,3 +61,7 @@
 .close{
   display: none;
 }
+
+.btn-warning{
+  margin-right: 15px;
+}

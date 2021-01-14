@@ -12,6 +12,10 @@ class App extends Component {
       task: [],
       isDisplay: false,
       taskEditTing: null,
+      filter :{
+          name : '',
+          status : -1
+      }
     };
   }
 
@@ -74,12 +78,14 @@ class App extends Component {
   onToggleForm = () => {
     this.setState({
       isDisplay: !this.state.isDisplay,
+      taskEditTing: null,
     });
   };
 
   onCloseForm = () => {
     this.setState({
       isDisplay: false,
+      taskEditTing: null,
     });
   };
 
@@ -103,6 +109,7 @@ class App extends Component {
 
     this.setState({
       task: task,
+      taskEditTing: null,
     });
 
     localStorage.setItem("task", JSON.stringify(task));
@@ -163,8 +170,41 @@ class App extends Component {
     this.onOpenForm();
   };
 
+  //filter
+  onFilter = (filterName, filterStatus) => {
+    //console.log(filterName, "-", filterStatus);
+    filterStatus = parseInt(filterStatus, 10);
+    this.setState({
+        filter : {
+            name : filterName.toLowerCase(),
+            status : filterStatus
+        }
+    })
+  };
+
   render() {
-    var { task, isDisplay, taskEditTing } = this.state; // var task = this.state.task
+    var { task, isDisplay, taskEditTing , filter } = this.state; // var task = this.state.task
+    if(filter){
+        if(filter.name){   // xét khác 0 , khác null , khác undefine
+            task = task.filter((task) => {
+                return task.name.toLowerCase().indexOf(filter.name) !== -1;
+            }); 
+        }
+
+        task = task.filter((task) => {
+            if(filter.status === -1)
+            {
+                return task;
+            } else {
+                return task.status === (filter.status === 1 ? true : false);
+            }
+
+
+        }); 
+    }
+
+
+
     var genDisplay = isDisplay ? (
       <TaskForm
         onCloseForm={this.onCloseForm}
@@ -216,6 +256,7 @@ class App extends Component {
                 onUpdateStatus={this.onUpdateStatus}
                 onDeleteItem={this.onDeleteItem}
                 onUpdate={this.onUpdate}
+                onFilter={this.onFilter} // nhận lại dữ liệu từ thèn con props vào
               />
             </div>
           </div>
