@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.lession1{
+  margin: 20px;
+
+}
+
+.mt-15{
+  margin-top: 15px;
+}
+
+.ml-10{
+  margin-left: 5px;
+}
+
+.text-right{
+  float: right;
+  cursor: pointer;
+}
+
+.icon{
+  margin-right: 6px;
+}
+.close{
+  display: none;
+}
