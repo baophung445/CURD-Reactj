@@ -7,22 +7,13 @@ class TaskItem extends Component {
   };
 
   onDeleteItem = () => {
-    //console.log(this.props.task.id);
-    //console.log(this.props.task);
+    
     this.props.onDeleteItem(this.props.task.id);
   };
 
   onUpdate = () => {
-    //console.log(this.props.task.id);
-    //console.log(this.props.task);
     this.props.onUpdate(this.props.task.id);
   };
-
-  // onSua = () =>{
-  //     console.log("Sua");
-  //     console.log(this.props.task);
-  //     //this.props.onSua(this.props.task.id);
-  // }
 
   render() {
     var { task, index } = this.props;
@@ -50,7 +41,7 @@ class TaskItem extends Component {
             className="btn btn-warning"
             onClick={this.onUpdate}
           >
-            <span className="fa fa-pencil mr-5"></span>Sửa
+            <span className="fa fa-pencil mr-5 icon"></span>Sửa
           </button>
           &nbsp;
           <button
@@ -58,7 +49,7 @@ class TaskItem extends Component {
             className="btn btn-danger"
             onClick={this.onDeleteItem}
           >
-            <span className="fa fa-trash mr-5"></span>Xóa
+            <span className="fa fa-trash mr-5  icon"></span>Xóa
           </button>
         </td>
       </tr>

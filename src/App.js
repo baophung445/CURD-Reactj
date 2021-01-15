@@ -12,10 +12,15 @@ class App extends Component {
       task: [],
       isDisplay: false,
       taskEditTing: null,
-      filter :{
-          name : '',
-          status : -1
-      }
+      filter: {
+        name: "",
+        status: -1,
+      },
+      keyword: "",
+      sort: {
+        name: "",
+        value: "",
+      },
     };
   }
 
@@ -70,7 +75,7 @@ class App extends Component {
       },
     ];
 
-    console.log("task1", tasks);
+    //console.log("task1", tasks);
 
     localStorage.setItem("task", JSON.stringify(tasks));
   };
@@ -106,7 +111,6 @@ class App extends Component {
       var index = this.findIndex(data.id);
       task[index] = data;
     }
-
     this.setState({
       task: task,
       taskEditTing: null,
@@ -141,9 +145,8 @@ class App extends Component {
   };
 
   // Delete
-
   onDeleteItem = (id) => {
-    console.log(id);
+    // console.log(id);
     var { task } = this.state;
     var index = this.findIndex(id);
 
@@ -151,7 +154,7 @@ class App extends Component {
       task.splice(index, 1);
       this.setState({ people: task });
     }
-    console.log(task);
+    //console.log(task);
     localStorage.setItem("task", JSON.stringify(task));
   };
 
@@ -175,35 +178,75 @@ class App extends Component {
     //console.log(filterName, "-", filterStatus);
     filterStatus = parseInt(filterStatus, 10);
     this.setState({
-        filter : {
-            name : filterName.toLowerCase(),
-            status : filterStatus
-        }
-    })
+      filter: {
+        name: filterName.toLowerCase(),
+        status: filterStatus,
+      },
+    });
+  };
+
+  //Search
+  onSearch = (keyword) => {
+    //console.log(keyword);
+    this.setState({
+      keyword: keyword,
+    });
+  };
+
+  // Sort
+  onSort = (name, value) => {
+    //console.log(name, value);
+    this.setState({
+      sort: {
+        name: name,
+        value: value,
+      },
+    });
+    //console.log(this.state.sort);
   };
 
   render() {
-    var { task, isDisplay, taskEditTing , filter } = this.state; // var task = this.state.task
-    if(filter){
-        if(filter.name){   // xét khác 0 , khác null , khác undefine
-            task = task.filter((task) => {
-                return task.name.toLowerCase().indexOf(filter.name) !== -1;
-            }); 
-        }
-
+    var { task, isDisplay, taskEditTing, filter, keyword } = this.state; // var task = this.state.task
+    if (filter) {
+      if (filter.name) {
+        // xét khác 0 , khác null , khác undefine
         task = task.filter((task) => {
-            if(filter.status === -1)
-            {
-                return task;
-            } else {
-                return task.status === (filter.status === 1 ? true : false);
-            }
+          return task.name.toLowerCase().indexOf(filter.name) !== -1;
+        });
+      }
 
-
-        }); 
+      task = task.filter((task) => {
+        if (filter.status === -1) {
+          return task;
+        } else {
+          return task.status === (filter.status === 1 ? true : false);
+        }
+      });
     }
 
+    // nếu có keyword thì mình mới thực hiện hành dông này
+    if (keyword) {
+      task = task.filter((task) => {
+        return task.name.toLowerCase().indexOf(keyword) !== -1;
+      });
+    }
 
+    console.log(this.state.sort.name);
+    var { name } = this.state.sort;
+    var { value } = this.state.sort;
+
+    if (name && value) {
+      if (name === "name" && value === 1) {
+        // return task.sort;
+        //console.log(task);
+        // eslint-disable-next-line array-callback-return
+        task.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          else if (a.name < b.name) return -1;
+          else return 0;
+        });
+      }
+    }
 
     var genDisplay = isDisplay ? (
       <TaskForm
@@ -214,6 +257,7 @@ class App extends Component {
     ) : (
       ""
     );
+
     return (
       <div className="container">
         <div className="text-center">
@@ -249,7 +293,7 @@ class App extends Component {
               <span className="fa fa-plus ml-10"></span> Thêm
             </button>
             <br />
-            <Control />
+            <Control onSearch={this.onSearch} onSort={this.onSort} />
             <div className="row mt-15">
               <TaskList
                 task={task}

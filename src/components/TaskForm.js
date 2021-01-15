@@ -56,18 +56,17 @@ class TaskForm extends Component {
     //console.log(this.state);
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     // console.log(nextProps);
 
     if (nextProps && nextProps.tasksss) {
-        this.setState({
-          id: nextProps.tasksss.id,
-          name: nextProps.tasksss.name,
-          status: nextProps.tasksss.status,
-        });
-      }
+      this.setState({
+        id: nextProps.tasksss.id,
+        name: nextProps.tasksss.name,
+        status: nextProps.tasksss.status,
+      });
+    }
   }
-
 
   render() {
     var { id } = this.state;

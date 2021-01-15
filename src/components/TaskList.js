@@ -6,7 +6,7 @@ class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterName: '',
+      filterName: "",
       filterStatus: -1,
     };
   }
@@ -17,19 +17,14 @@ class TaskList extends Component {
     var value = target.value;
 
     // truyền dữ liệu cho thèn cha.
-    this.props.onFilter(   
-      name === 'filterName' ? value : this.state.filterName,
-      name === 'filterStatus' ? value : this.state.filterStatus
-       
-    ) 
-
-    
+    this.props.onFilter(
+      name === "filterName" ? value : this.state.filterName,
+      name === "filterStatus" ? value : this.state.filterStatus
+    );
 
     this.setState({
       [name]: value,
     });
-
-   
   };
 
   render() {

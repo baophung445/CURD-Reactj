@@ -56,12 +56,27 @@
 }
 
 .icon{
-  margin-right: 6px;
+  margin-right: 5px;
 }
+
+.ml-5{
+  margin-left: 5px;
+}
+
 .close{
   display: none;
 }
 
 .btn-warning{
   margin-right: 15px;
+}
+
+.sort-selected::after{
+  content: '\f00c';
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  margin:  0 0 0 10px;
+  display: inline-block;
+
 }
